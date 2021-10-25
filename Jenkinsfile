@@ -12,9 +12,6 @@ def buildAndTag(name) {
 
 pipeline {
   agent any
-  tools {
-      jdk 'jdk-8u202'
-  }
 
   stages {
     stage('Datetime') {
