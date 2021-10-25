@@ -37,40 +37,42 @@ pipeline {
         }
 
         stage('build images and push to registry') {
-            stage("apigateway") {
-              steps {
-                dir("$STAGE_NAME"){
-                    buildAndTag(STAGE_NAME)
+            parallel{
+                stage("apigateway") {
+                  steps {
+                    dir("$STAGE_NAME"){
+                        buildAndTag(STAGE_NAME)
+                    }
+                  }
                 }
-              }
-            }
-            stage("configserver") {
-              steps {
-                dir("$STAGE_NAME"){
-                    buildAndTag(STAGE_NAME)
+                stage("configserver") {
+                  steps {
+                    dir("$STAGE_NAME"){
+                        buildAndTag(STAGE_NAME)
+                    }
+                  }
                 }
-              }
-            }
-            stage("discoveryserver") {
-              steps {
-                dir("$STAGE_NAME"){
-                    buildAndTag(STAGE_NAME)
+                stage("discoveryserver") {
+                  steps {
+                    dir("$STAGE_NAME"){
+                        buildAndTag(STAGE_NAME)
+                    }
+                  }
                 }
-              }
-            }
-            stage("product") {
-              steps {
-                dir("$STAGE_NAME"){
-                    buildAndTag(STAGE_NAME)
+                stage("product") {
+                  steps {
+                    dir("$STAGE_NAME"){
+                        buildAndTag(STAGE_NAME)
+                    }
+                  }
                 }
-              }
-            }
-            stage("review") {
-              steps {
-                dir("$STAGE_NAME"){
-                    buildAndTag(STAGE_NAME)
+                stage("review") {
+                  steps {
+                    dir("$STAGE_NAME"){
+                        buildAndTag(STAGE_NAME)
+                    }
+                  }
                 }
-              }
             }
         }
         stage('compose up') {
