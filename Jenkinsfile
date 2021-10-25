@@ -80,17 +80,7 @@ pipeline {
                 }
             }
         }
-        stage('push docker image'){
-            steps{
-                script {
-                      docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credential') {
-                        def app = docker.build("$name")
-                        app.push("$timestamp")
-                        app.push("latest")
-                      }
-                }
-            }
-        }
+
         stage('compose up') {
           steps {
               sh "docker-compose up -d"
