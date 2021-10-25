@@ -2,7 +2,7 @@ import java.text.SimpleDateFormat
 
 def buildAndTag(name) {
   script {
-      def app = docker.build("$name")
+      def app = docker.build("sheepbomb/mikang31-repo/$name")
       app.push("$timestamp")
       app.push("latest")
   }
