@@ -1,6 +1,6 @@
 import java.text.SimpleDateFormat
 
-def buildAndTag(name) {
+def buildAndTag(name,timestamp) {
   script {
       docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credential') {
         def app = docker.build("$name")
@@ -19,7 +19,7 @@ pipeline {
         script {
           def dateFormat = new SimpleDateFormat("yyyyMMddHHmmss")
           def current = new Date()
-          def timestamp = dateFormat.format(current)
+          timestamp = dateFormat.format(current)
         }
         echo "Current datetime $timestamp!"
       }
