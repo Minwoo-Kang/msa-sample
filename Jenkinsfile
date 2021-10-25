@@ -2,11 +2,9 @@ import java.text.SimpleDateFormat
 
 def buildAndTag(name) {
   script {
-      docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credential') {
-        def app = docker.build("$name")
-        app.push("$timestamp")
-        app.push("latest")
-      }
+      def app = docker.build("$name")
+      app.push("$timestamp")
+      app.push("latest")
   }
 }
 
@@ -23,6 +21,14 @@ pipeline {
         }
         echo "Current datetime $timestamp!"
       }
+    }
+
+    stage('docker login'){
+        steps {
+            withCredentials([usernamePassword(credentialsId: 'docker-hub-credential', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+              sh 'docker login -u $USERNAME -p $PASSWORD https://registry.hub.docker.com'
+            }
+        }
     }
 
     stage ('build and deploy') {
@@ -71,6 +77,17 @@ pipeline {
                         buildAndTag(STAGE_NAME)
                     }
                   }
+                }
+            }
+        }
+        stage('push docker image'){
+            steps{
+                script {
+                      docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credential') {
+                        def app = docker.build("$name")
+                        app.push("$timestamp")
+                        app.push("latest")
+                      }
                 }
             }
         }
