@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: discoveryserver
+  profiles:
+    active: ${SPRING_PROFILE:default}
+  config:
+    import: "configserver:http://${CONFIG_SERVER:localhost:8888}"

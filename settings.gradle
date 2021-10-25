@@ -1,0 +1,8 @@
+rootProject.name = 'minuu'
+include 'apigateway'
+include 'configserver'
+include 'discoveryserver'
+include 'product'
+include 'review'
+include 'common'
+

@@ -1,0 +1,9 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: apigateway
+  profiles:
+    active: ${SPRING_PROFLE:default}
+  config:
+    import: "configserver:http://${CONFIG_SERVER:localhost:8888}"
