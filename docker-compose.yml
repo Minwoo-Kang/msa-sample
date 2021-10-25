@@ -29,8 +29,7 @@ services:
     networks:
       - msa-project-02
   config-server:
-    build: ./configserver
-    image: configserver:latest
+    image: sheepbomb/configserver:latest
     restart: always
     ports:
       - 8888:8888
@@ -39,8 +38,7 @@ services:
     environment:
       - SPRING_PROFILE:default
   discovery-server:
-    build: ./discoveryserver
-    image: discoveryserver:latest
+    image: sheepbomb/discoveryserver:latest
     restart: always
     ports:
       - 8761:8761
@@ -52,8 +50,7 @@ services:
     depends_on:
       - config-server
   gateway-server:
-    build: ./apigateway
-    image: apigateway:latest
+    image: sheepbomb/apigateway:latest
     restart: always
     ports:
       - 8080:8080
@@ -67,8 +64,7 @@ services:
       - config-server
       - discovery-server
   product-service:
-    build: ./product
-    image: product:latest
+    image: sheepbomb/product:latest
     restart: always
     networks:
       - msa-project-02
@@ -85,8 +81,7 @@ services:
       - gateway-server
       - product-db
   review-service:
-    build: ./review
-    image: review:latest
+    image: sheepbomb/review:latest
     restart: always
     networks:
       - msa-project-02
