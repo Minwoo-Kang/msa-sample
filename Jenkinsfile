@@ -28,6 +28,7 @@ pipeline {
     stage ('build and deploy') {
       stages {
         stage('clean bootJar') {
+        //jar build는 한번에
           steps {
               sh "./gradlew clean bootJar"
           }
@@ -35,6 +36,7 @@ pipeline {
 
         stage('build images and push to registry') {
             parallel{
+            //parallel하게 이미지를 빌드 & 푸쉬
                 stage("apigateway") {
                   steps {
                     dir("$STAGE_NAME"){
