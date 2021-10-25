@@ -2,9 +2,11 @@ import java.text.SimpleDateFormat
 
 def buildAndTag(name) {
   script {
+    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credential') {
       def app = docker.build("sheepbomb/mikang31-repo")
       app.push("$timestamp")
       app.push("latest")
+    }
   }
 }
 
@@ -40,8 +42,8 @@ pipeline {
           }
         }
 
-        stage('build images and push to registry') {
-            parallel{
+//         stage('build images and push to registry') {
+//             parallel{
             //parallel하게 이미지를 빌드 & 푸쉬
                 stage("apigateway") {
                   steps {
@@ -78,8 +80,8 @@ pipeline {
                     }
                   }
                 }
-            }
-        }
+//             }
+//         }
 
         stage('compose up') {
           steps {
