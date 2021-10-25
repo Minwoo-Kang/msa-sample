@@ -1,6 +1,6 @@
 import java.text.SimpleDateFormat
 
-def buildAndTag(name,timestamp) {
+def buildAndTag(name) {
   script {
       docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credential') {
         def app = docker.build("$name")
